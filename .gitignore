@@ -1,0 +1,6 @@
+/.idea/
+/jaray-auth-center/.mvn/
+/jaray-auth-client/.mvn/
+/jaray-auth-common/.mvn/
+/jaray-gateway-center/.mvn/
+/jaray-service-order/.mvn/

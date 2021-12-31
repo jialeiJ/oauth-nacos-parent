@@ -1,0 +1,31 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    # 链接超时时间（毫秒）
+    timeout: 10000
+    # 如果使用的jedis 则将lettuce改成jedis即可
+    lettuce:
+      pool:
+        # 最大活跃链接数 默认8
+        max-active: 8
+        # 最大空闲连接数 默认8
+        max-idle: 8
+        # 最小空闲连接数 默认0
+        min-idle: 0
+        # 连接池最大阻塞等待时间（使用负值表示无限制）
+        max-wait: 10000
+        # 关闭超时时间
+        shutdown-timeout: 100
+##安全配置##
+security:
+  oauth2:
+    resource:
+      id: resource-server
+      ## user-info-uri和token-info-uri二选择即可
+      ##如果配置了user-info-uri，该资源服务器使用userInfoTokenServices远程调用认证中心接口，通过认证中心的OAuth2AuthenticationProcessingFilter完成验证工作，一般设置user-info-uri即可
+      user-info-uri: http://localhost:9095/oauth/user
+      prefer-token-info: false
+      ## 该资源服务器使用RemoteTokenServices远程调用认证中心接口，注意一点就是如果使用token-info-uri那么就必须设置上clientId和clientSecret，通过CheckTokenEndpoint完成验证工作
+      #token-info-uri: http://127.0.0.1:8001/oauth/check_token

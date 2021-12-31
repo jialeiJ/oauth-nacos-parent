@@ -1,0 +1,47 @@
+# 配置端口
+server:
+  port: 9095
+
+spring:
+  # 配置服务名
+  application: 
+    name: jaray-gateway-center
+  main:
+    allow-bean-definition-overriding: true # SpringBoot 2.1需要设置
+  cloud:
+    nacos:
+      # Nacos服务注册中心地址
+      discovery: 
+        server-addr: 192.168.5.101:8848
+        namespace: b7bf2757-efe2-4bb0-8f6d-93915c592201
+      # Nacos配置中心地址
+      config: 
+        server-addr: 192.168.5.101:8848
+        file-extension: yaml     #配置文件后缀
+        namespace: b7bf2757-efe2-4bb0-8f6d-93915c592201 # 命令空间，可以用来区分不同的环境
+    # 配置路由
+    gateway: 
+      discovery: 
+        locator: 
+          # 表明gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          enabled: true
+          # 请求路径上的服务名配置为小写（服务注册的时候，向注册中心注册时将服务名转成大写的,比如以/service-hi/*的请求路径被路由转发到服务名为service-hi的服务上
+          lower-case-service-id: true  
+    # Sentinel控制台地址
+    sentinel: 
+      transport:
+        dashboard: 192.168.5.101:8080
+        client-ip: 192.168.71.1
+        # 与 Sentinel控制台做交互。若 Sentinel控制台添加了一个限流规则，会把规则数据 push给这个 Http Server接收，Http Server再将规则注册到 Sentinel中
+        port: 8719
+
+# 开启 Feign 对 Sentinel 的支持
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

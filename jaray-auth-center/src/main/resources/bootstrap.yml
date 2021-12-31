@@ -1,0 +1,46 @@
+server:
+  port: 9009
+
+spring:
+  application: 
+    name: jaray-auth-center # 项目名称
+  main:
+    allow-bean-definition-overriding: true # SpringBoot 2.1需要设置
+  cloud:
+    nacos: 
+      discovery:
+        server-addr: 192.168.5.101:8848 # Nacos服务注册中心地址
+        namespace: b7bf2757-efe2-4bb0-8f6d-93915c592201
+      config: 
+        server-addr: 192.168.5.101:8848 # Nacos配置中心地址
+        file-extension: yaml     #配置文件后缀
+        namespace: b7bf2757-efe2-4bb0-8f6d-93915c592201 # 命令空间，可以用来区分不同的环境
+    # Sentinel控制台地址
+    sentinel:
+      transport:
+        dashboard: 192.168.5.101:8080
+        client-ip: 192.168.71.1
+        # 与 Sentinel控制台做交互。若 Sentinel控制台添加了一个限流规则，会把规则数据 push给这个 Http Server接收，Http Server再将规则注册到 Sentinel中
+        port: 8719
+
+# 开启 Feign 对 Sentinel 的支持
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#mybatis配置
+mybatis:
+  type-aliases-package: com.vienna.jaray.entity.**,com.vienna.jaray.model.**
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath*:mybatis/mapper/**/*.xml
+
+# 配置sql打印日志
+logging:
+  level:
+    com.vienna.jaray.mapper: debug

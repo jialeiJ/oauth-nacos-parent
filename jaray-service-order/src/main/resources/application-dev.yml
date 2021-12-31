@@ -1,0 +1,11 @@
+# 资源服务器配置
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:9009/oauth/check_token
+      prefer-token-info: true
+    client:
+      access-token-uri: http://localhost:9009/oauth/token
+      user-authorization-uri: http://localhost:9009/oauth/authorize
+      client-id: clientId
+      client-secret: secret
